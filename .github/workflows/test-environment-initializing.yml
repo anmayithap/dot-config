@@ -15,12 +15,14 @@ jobs:
     
     strategy:
       matrix:
-        os: ["fedora:latest", "debian:latest", "centos:latest"]
+        os: ["fedora:latest", "ubuntu:latest", "centos:latest"]
         
     steps:
     - uses: actions/checkout@v2
     
     - name: Run install script
       run: |
-        chmod +x install.sh
+        chmod u+x install.sh
+        find ./macos/ -type f -iname "*.sh" -exec chmod +x {} \;
+        find ./linux/ -type f -iname "*.sh" -exec chmod +x {} \;
         ./install.sh

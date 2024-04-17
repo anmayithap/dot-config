@@ -1,13 +1,18 @@
-echo "Welcom to environment installer!"
+#!/bin/bash
 
-if [ "$(uname)" == "Darwin" ]; then
-    echo "Mac"
+echo "\
+  _      __    __                     __         ___  ____  ______    _________  _  _________________
+ | | /| / /__ / /______  __ _  ___   / /____    / _ \/ __ \/_  __/___/ ___/ __ \/ |/ / __/  _/ ___/ /
+ | |/ |/ / -_) / __/ _ \/  ' \/ -_) / __/ _ \  / // / /_/ / / / /___/ /__/ /_/ /    / _/_/ // (_ /_/
+ |__/|__/\__/_/\__/\___/_/_/_/\__/  \__/\___/ /____/\____/ /_/      \___/\____/_/|_/_/ /___/\___(_)
+
+"
+
+if [[ $(uname) == "Darwin" ]]; then
     cd ./macos
-    ./main.sh
-elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-    echo "Linux"
+elif [[ $(uname -s) == "Linux" ]]; then
     cd ./linux
-    ./main.sh
-elif [ "$(expr substr $(uname -s) 1 5)" == "MINGW" ]; then
-    echo "Windows"
 fi
+
+chmod +x main.sh
+./main.sh
