@@ -1,35 +1,13 @@
 #!/bin/bash
+
 echo "Lets setting up zsh..."
 
 MARK="AnmayithapZSHRC"
 
-function install_zsh() {
-    if [[ -f /usr/bin/yum ]]; then
-        sudo yum install zsh -y
-    elif [[ -f /usr/bin/dnf ]]; then
-        sudo dnf install zsh -y
-    elif [[ -f /usr/bin/apt ]]; then
-        sudo apt-get install zsh -y
-    fi
-}
-
-function in_docker_install_zsh() {
-    if [[ -f /usr/bin/yum ]]; then
-        yum install zsh -y
-    elif [[ -f /usr/bin/dnf ]]; then
-        dnf install zsh -y
-    elif [[ -f /usr/bin/apt ]]; then
-        apt-get install zsh -y
-    fi
-}
-
 if [[ ! -f /usr/bin/zsh ]]; then
     echo "ZSH is not installed. Lets try install..."
-    if ! type sudo > /dev/null; then
-        in_docker_install_zsh
-    else
-        install_zsh
-    fi
+    
+    eval "$SUDO $PACKAGE_MANAGER install zsh -y"
 fi
 
 if [[ ! $SHELL == "/usr/bin/zsh" ]]; then
@@ -50,7 +28,26 @@ if [[ -f ~/.zshrc ]]; then
     fi
 fi
 
+./packages.sh
+
 echo "ZSHRC not installed. installing..."
-cp ./configs/.zshrc ~/.zshrc
+
+echo "\
+export TERM="xterm-256color"
+export ZPLUG_HOME=$HOME/.zplug
+export PIPX_HOME=$HOME/.pipx
+export PIPX_BIN_DIR=$PIPX_HOME/bin
+export PIPX_MAN_DIR=$PIPX_HOME/man
+export POETRY_HOME=$HOME/.pypoetry
+export POETRY_CONFIG_DIR=$POETRY_HOME
+export POETRY_CACHE_DIR=$POETRY_HOME
+export POETRY_VIRTUALENVS_PATH=$POETRY_HOME/.virtualenvs
+export PYENV_ROOT=$HOME/.pyenv
+export GOENV_ROOT=$HOME/.goenv
+" >> ~/.zshrc
+
 echo "Done. Please restart your terminal to apply changes and run main.sh again"
+
+cat ~/.zshrc
+
 exit 1
