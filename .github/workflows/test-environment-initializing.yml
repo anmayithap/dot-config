@@ -18,7 +18,7 @@ jobs:
         os: ["slijirqqq/dot-config:fedora", "slijirqqq/dot-config:ubuntu", "slijirqqq/dot-config:centos"]
         
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     
     - name: Run install script
       run: |
