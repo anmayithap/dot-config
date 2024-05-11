@@ -80,13 +80,12 @@ class DotConfig(cli.Application):
     def install_zsh(self: Self) -> None:
         print(colors.green | ascii_text('Install ZSH'))
 
-        print(colors.red | 'Change shell to zsh')
+        print(colors.red | 'Checks current shell')
 
-        path_to_zsh: str = local['which']('zsh').strip()
-
-        local['chsh']('-s', path_to_zsh)
-
-        print(colors.red | 'Shell successfully changed')
+        if local.env('SHELL') != '/bin/zsh':
+            print(colors.warn | 'After configure zsh u should change shell by `chsh`')
+        else:
+            print(colors.red | 'Shell already zsh')
 
         if (path := local.path('~/.zshrc')).exists():
             if local['grep']['-q', MARK, path] & TF:
