@@ -82,7 +82,7 @@ class DotConfig(cli.Application):
 
         print(colors.red | 'Checks current shell')
 
-        if local.env('SHELL') != '/bin/zsh':
+        if local.env['SHELL'] != '/bin/zsh':
             print(colors.warn | 'After configure zsh u should change shell by `chsh`')
         else:
             print(colors.red | 'Shell already zsh')
