@@ -1,0 +1,103 @@
+[tool.poetry]
+name = "dot-config"
+version = "0.1.0"
+description = "⚙️ .files"
+authors = ["Ruslan Torbeev <ruslan.torbeev@yandex.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.12.*"
+plumbum = "^1.8.2"
+distro = "^1.9.0"
+art = "^6.2"
+tqdm = "^4.66.4"
+
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.1.1"
+
+
+[tool.poetry.group.lint.dependencies]
+autopep8 = "^2.1.0"
+ruff = "^0.4.2"
+mypy = "^1.10.0"
+types-tqdm = "^4.66.0.20240417"
+
+[tool.ruff]
+# Enable the pycodestyle (`E`) and Pyflakes (`F`) rules by default.
+# Unlike Flake8, Ruff doesn't enable pycodestyle warnings (`W`) or
+# McCabe complexity (`C901`) by default.
+select = [
+    "E",
+    "F",
+    "W",
+    "B",   # flake8-bugbear
+    "D",   # pydocstyle
+    "I",   # isort
+    "N",   # pep8-naming
+    "COM", # flake8-commas
+    "ARG", # flake8-unused-arguments
+    "PTH", # flake8-use-pathlib
+]
+ignore = [
+    "D100",   # Missing docstring in public module
+    "D104",
+    "D105",
+    "D107",   # Missing docstring in __init__
+    "ARG001", # Unused function argument
+]
+
+
+# Exclude a variety of commonly ignored directories.
+exclude = [
+    ".git",
+    ".mypy_cache",
+    ".ruff_cache",
+    ".pytest_cache",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "__pycache__",
+    "venv",
+    "docs",
+]
+
+line-length = 120
+
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.lint.per-file-ignores]
+
+"tests/*" = ["D"]
+
+[tool.mypy]
+
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+disallow_untyped_decorators = true
+
+strict_optional = true
+
+warn_redundant_casts = true
+warn_return_any = true
+warn_unreachable = true
+
+extra_checks = true
+strict_equality = true
+
+[[tool.mypy.overrides]]
+
+module = "plumbum.*"
+
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+
+module = "art.*"
+
+ignore_missing_imports = true
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
